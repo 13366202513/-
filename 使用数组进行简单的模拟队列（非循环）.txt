@@ -1,0 +1,110 @@
+package test.learn.algorithm.Queue;
+
+public class ArryQueue {
+    private int maxSize;//最大值
+    private int front;//队首的位置
+    private int rear;//队尾的位置
+    int []arry;//数组
+    //构造函数
+    public ArryQueue(int MaxSize){
+        maxSize = MaxSize;
+        arry = new int[maxSize];
+        front = -1;
+        rear = -1;
+    }
+    //判断是否为空
+    public boolean isEmpty(){
+        return front == rear;
+    }
+    //判断是否为满
+    public boolean isFull(){
+        return rear == maxSize-1;
+    }
+    //添加一个元素
+    public void addQueue(int n){
+        //判断队列是否满
+        if(isFull()){
+            System.out.println("队列已满，不可再添加元素。");
+            return;
+        }
+        //队列不满则正常添加
+        arry[++rear]=n;
+    }
+    //输出一个元素
+    public int getQueue(){
+        //判断是否为空
+        if(isEmpty()){
+            throw new RuntimeException("队列为空，不可删除元素。");
+        }
+        //队列不空则正常输出
+        return arry[++front];
+    }
+    //获取队列头元素
+    public int headQueue(){
+        //判断是否为空
+        if(isEmpty()){
+            throw new RuntimeException("队列为空，不可删除元素。");
+        }
+        //队列不空则正常输出
+        return arry[front+1];
+    }
+    public void showQueue(){
+        if(isEmpty()){
+            System.out.println("队列为空");
+        }
+        for(int i = front+1;i<=rear;i++)
+            System.out.print(arry[i]+"\t");
+        System.out.println();
+    }
+
+}
+
+
+
+
+package test.learn.algorithm.Queue;
+
+import java.util.Scanner;
+
+public class Test {
+    public static void main(String[] args) {
+        //创建一个队列
+        ArryQueue arryQueue = new ArryQueue(4);
+        char key = ' ';//接收用户输入
+        Scanner sc = new Scanner(System.in);
+        boolean loop = true;
+        while(loop){
+            System.out.println("s(show)：显示队列");
+            System.out.println("a(add)：添加数据到队列");
+            System.out.println("g(get)：输出队列数据");
+            System.out.println("h(head)：显示队列头部数据");
+            System.out.println("e(exit)：退出程序");
+            key = sc.next().charAt(0);//接收一个字符
+            switch (key){
+                case 's' :
+                    arryQueue.showQueue();
+                    break;
+                case 'a':
+                    System.out.println("请输入元素：");
+                    int n = sc.nextInt();
+                    arryQueue.addQueue(n);
+                    break;
+                case 'g':
+                    System.out.println("元素出队");
+                    System.out.println(arryQueue.getQueue());
+                    break;
+                case'h':
+                    System.out.println("队头元素为：");
+                    System.out.println(arryQueue.headQueue());
+                    break;
+                case'e':
+                    System.out.println("程序退出");
+                    loop = false;
+                    break;
+                default:
+                    break;
+            }
+        }
+    }
+}
+
